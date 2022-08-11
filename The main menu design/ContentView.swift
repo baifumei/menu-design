@@ -130,9 +130,18 @@ struct ContentView: View {
                 }
                 
                 Spacer(minLength: 0)
+                
             }
-            .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top)
-            .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.bottom)
+            .padding(.top, UIApplication
+                .shared
+                .connectedScenes
+                .flatMap { ($0 as? UIWindowScene)?.windows ?? [] }
+                .first { $0.isKeyWindow }?.safeAreaInsets.top)
+            .padding(.top, UIApplication
+                .shared
+                .connectedScenes
+                .flatMap { ($0 as? UIWindowScene)?.windows ?? [] }
+                .first { $0.isKeyWindow }?.safeAreaInsets.bottom)
             
             VStack {
                 HStack {
@@ -146,6 +155,7 @@ struct ContentView: View {
                             .frame(width: self.show ? 18 : 22, height: 18)
                             .foregroundColor(Color.black.opacity(0.4))
                     }
+                    
                     Text(self.index == 1 ? "Catalogue" : (self.index == 2 ? "Cart" : (self.index == 3 ? "Favorites" : "My order")))
                         .font(.title)
                         .foregroundColor(Color.black.opacity(0.6))
@@ -153,7 +163,11 @@ struct ContentView: View {
                         .padding(.leading, 5)
                     
                     Spacer(minLength: 0)
-                }.padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top)
+                }.padding(.top, UIApplication
+                    .shared
+                    .connectedScenes
+                    .flatMap { ($0 as? UIWindowScene)?.windows ?? [] }
+                    .first { $0.isKeyWindow }?.safeAreaInsets.top)
                 .padding()
                 
                 GeometryReader { _ in
