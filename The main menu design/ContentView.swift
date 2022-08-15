@@ -164,17 +164,17 @@ struct ContentView: View {
                 .padding()
                 
                 GeometryReader { _ in
-                    if self.index == 1 {
-                        Catalogue()
-                    }
-                    else if self.index == 2 {
+                    if self.index == 2 {
                         Cart()
                     }
                     else if self.index == 3 {
                         Fav()
                     }
-                    else {
+                    else if self.index == 4 {
                         Order()
+                    }
+                    else {
+                        Catalogue()
                     }
                 }
             }
@@ -189,28 +189,121 @@ struct ContentView: View {
 
 struct Catalogue: View {
     var body: some View {
-        Text("Catalogue")
-            .padding()
+        VStack(alignment: .center) {
+            HStack() {
+                Item(image: "dress", name: "Dress", widths: 35, heights: 60)
+                Item(image: "electronics", name: "Electronics", widths: 80, heights: 60)
+                Item(image: "shoes", name: "Shoes", widths: 50, heights: 60)
+                Item(image: "pets", name: "For pets", widths: 60, heights: 60)
+            }
+        }
+    }
+}
+
+
+struct Item: View {
+    let image: String
+    let name: String
+    let widths: CGFloat
+    let heights: CGFloat
+    
+    var body: some View {
+        Button(action: {
+            //
+        }) {
+            VStack(alignment: .center) {
+                Image(image)
+                    .resizable()
+                    .frame(width: widths, height: heights)
+                Text(name)
+                    .foregroundColor(.black)
+            }.padding(6.5)
+        }
     }
 }
 
 struct Cart: View {
     var body: some View {
-        Text("Cart")
-            .padding()
+        VStack {
+            List {
+                Good(image: "bicycle", name: "Giant Bicycle KR085", price: 22550)
+                Good(image: "mixer", name: "KitchenAid KSM150PSER Artisan Tilt-Head Stand Mixer", price: 50250)
+            }
+        }
+    }
+}
+
+struct Good: View {
+    let image: String
+    let name: String
+    let price: Int
+    
+    var body: some View {
+        Section {
+            VStack(alignment: .leading) {
+                HStack {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 10)
+                            .frame(width: 110, height: 80)
+                            .foregroundColor(Color("BGColor2"))
+                            .shadow(color: .black.opacity(0.4), radius: 1)
+                        Image(image)
+                            .resizable()
+                            .frame(width: 100, height: 70)
+                    }.padding(5)
+                    
+                    VStack {
+                        Text("\(price) rub.")
+                            .fontWeight(.bold)
+                        Text(name)
+                    }
+                }
+                Divider()
+                
+                HStack {
+                    Button(action: {
+                        //
+                    }) {
+                        HStack {
+                            Image(systemName: "heart.circle.fill")
+                                .foregroundColor(.red)
+                            Text("In favorite")
+                                .foregroundColor(.black)
+                        }
+                    }.padding(2)
+                    
+                    Button(action: {
+                        //
+                    }) {
+                        HStack {
+                            Image(systemName: "trash")
+                                .foregroundColor(.black)
+                            Text("Delete")
+                                .foregroundColor(.black)
+                        }
+                    }
+                    
+                }
+            }
+        }.padding(5)
+            .listRowBackground(Color("BGColor"))
     }
 }
 
 struct Fav: View {
     var body: some View {
-        VStack {
+        VStack(alignment: .center) {
             HStack {
                 Goods(image: "bicycle", name: "Giant Bicycle KR085", price: "22 550 rub.", widths: 100, heights: 60)
                 Goods(image: "mixer", name: "Mixer KitchenAid", price: "50 250 rub.", widths: 100, heights: 60)
             }
-            HStack{
-                Goods(image: "badminton", name: "Badminton Racket N1", price: "2 700 rub.", widths: 70, heights: 80)
-                Goods(image: "shampoo", name: "Lotion/Shampoo LOreal", price: "3 100 rub.", widths: 90, heights: 70)
+            HStack {
+                Goods(image: "badminton", name: "Badminton racket n1", price: "2 700 rub.", widths: 70, heights: 80)
+                Goods(image: "shampoo", name: "Shampoo LOreal", price: "3 100 rub.", widths: 90, heights: 70)
+            }
+            HStack {
+                Goods(image: "airpods", name: "Apple AirPods", price: "15 300 rub.", widths: 90, heights: 70)
+                Goods(image: "macbook", name: "Apple MacBook Air 13 M1", price: "159 000 rub.", widths: 90, heights: 60)
             }
         }
     }
@@ -226,7 +319,7 @@ struct Goods: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
-                .frame(width: 165, height: 140)
+                .frame(width: 170, height: 140)
                 .shadow(color: .purple, radius: 3)
                 .foregroundColor(Color("BGColor2"))
             Button(action: {
@@ -249,7 +342,7 @@ struct Goods: View {
                 .frame(width: 30, height: 30)
                 .foregroundColor(.red)
                 .offset(x: 60, y: -50)
-        }.padding(4)
+        }.padding(7)
     }
 }
 
@@ -275,7 +368,7 @@ struct Sections: View {
     let orderDate: String
     
     var body: some View {
-        Section(header: Text("Order calendar:")) {
+        Section {
             VStack(alignment: .leading) {
                 Text("Order from \(orderDate)")
                     .fontWeight(.heavy)
