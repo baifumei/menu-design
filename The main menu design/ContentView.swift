@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  The main menu design
-//
-//  Created by Екатерина К on 09.08.2022.
-//
-
 import SwiftUI
 
 struct ContentView: View {
@@ -210,18 +203,102 @@ struct Cart: View {
 
 struct Fav: View {
     var body: some View {
-        Text("My favorites")
-            .padding()
+        VStack {
+            HStack {
+                Goods(image: "bicycle", name: "Giant Bicycle KR085", price: "22 550 rub.", widths: 100, heights: 60)
+                Goods(image: "mixer", name: "Mixer KitchenAid", price: "50 250 rub.", widths: 100, heights: 60)
+            }
+            HStack{
+                Goods(image: "badminton", name: "Badminton Racket N1", price: "2 700 rub.", widths: 70, heights: 80)
+                Goods(image: "shampoo", name: "Lotion/Shampoo LOreal", price: "3 100 rub.", widths: 90, heights: 70)
+            }
+        }
+    }
+}
+
+struct Goods: View {
+    let image: String
+    let name: String
+    let price: String
+    let widths: CGFloat
+    let heights: CGFloat
+    
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 20)
+                .frame(width: 165, height: 140)
+                .shadow(color: .purple, radius: 3)
+                .foregroundColor(Color("BGColor2"))
+            Button(action: {
+                //
+            }) {
+                VStack {
+                    Image(image)
+                        .resizable()
+                        .frame(width: widths, height: heights)
+                        
+                    Text(name)
+                        .foregroundColor(.black)
+                    Text(price)
+                        .foregroundColor(.black)
+                        .fontWeight(.bold)
+                }
+            }
+            Image(systemName: "heart.circle.fill")
+                .resizable()
+                .frame(width: 30, height: 30)
+                .foregroundColor(.red)
+                .offset(x: 60, y: -50)
+        }.padding(4)
     }
 }
 
 struct Order: View {
     var body: some View {
-        Text("My order")
-            .padding()
+        VStack {
+            List {
+                Sections(orderNumber: "№ 019202", sum: "5 750 rub.", delivaryDate: "29.03.2022", orderDate: "27.03.2022")
+                Sections(orderNumber: "№ 392083", sum: "2 900 rub.", delivaryDate: "22.02.2022", orderDate: "18.02.2022")
+                Sections(orderNumber: "№ 262176", sum: "3 520 rub.", delivaryDate: "03.02.2022", orderDate: "01.02.2022")
+                Sections(orderNumber: "№ 837295", sum: "7 600 rub.", delivaryDate: "23.01.2022", orderDate: "22.01.2022")
+                
+                
+            }
+        }
     }
 }
 
+struct Sections: View {
+    let orderNumber: String
+    let sum: String
+    let delivaryDate: String
+    let orderDate: String
+    
+    var body: some View {
+        Section(header: Text("Order calendar:")) {
+            VStack(alignment: .leading) {
+                Text("Order from \(orderDate)")
+                    .fontWeight(.heavy)
+                Text(orderNumber)
+                
+                Divider()
+                
+                HStack {
+                    Text("Delivery date:").fontWeight(.bold)
+                    Text(delivaryDate)
+                }
+                Text("Delivery to the pickup poin")
+                
+                Divider()
+                
+                Text(sum)
+                    .fontWeight(.bold)
+            }
+        }.listRowBackground(Color("BGColor"))
+    }
+}
+    
+    
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
