@@ -170,11 +170,11 @@ struct ContentView: View {
                     else if self.index == 3 {
                         Fav()
                     }
-                    else if self.index == 4 {
-                        Order()
+                    else if self.index == 1 {
+                        Catalogue()
                     }
                     else {
-                        Catalogue()
+                        Order()
                     }
                 }
             }
@@ -189,12 +189,18 @@ struct ContentView: View {
 
 struct Catalogue: View {
     var body: some View {
-        VStack(alignment: .center) {
+        VStack(alignment: .center, spacing: 30) {
             HStack() {
                 Item(image: "dress", name: "Dress", widths: 35, heights: 60)
-                Item(image: "electronics", name: "Electronics", widths: 80, heights: 60)
+                Item(image: "electronics", name: "Electro", widths: 80, heights: 60)
                 Item(image: "shoes", name: "Shoes", widths: 50, heights: 60)
                 Item(image: "pets", name: "For pets", widths: 60, heights: 60)
+            }
+            HStack {
+                Item(image: "child", name: "For child", widths: 45, heights: 60)
+                Item(image: "furniture", name: "Furniture", widths: 65, heights: 60)
+                Item(image: "toy", name: "Toys", widths: 55, heights: 60)
+                Item(image: "bags", name: "Bags", widths: 50, heights: 60)
             }
         }
     }
@@ -217,7 +223,7 @@ struct Item: View {
                     .frame(width: widths, height: heights)
                 Text(name)
                     .foregroundColor(.black)
-            }.padding(6.5)
+            }.padding(2).padding(.leading)
         }
     }
 }
@@ -270,7 +276,8 @@ struct Good: View {
                             Text("In favorite")
                                 .foregroundColor(.black)
                         }
-                    }.padding(2)
+                    }.buttonStyle(PlainButtonStyle())
+                        .padding(2)
                     
                     Button(action: {
                         //
@@ -281,8 +288,7 @@ struct Good: View {
                             Text("Delete")
                                 .foregroundColor(.black)
                         }
-                    }
-                    
+                    }.buttonStyle(PlainButtonStyle())
                 }
             }
         }.padding(5)
